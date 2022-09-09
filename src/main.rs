@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use clap::Parser;
 use hyper::Client;
 
