@@ -40,7 +40,8 @@ jobs:
    
     - name: Create tar artifact
       run: |
-        tar -czf whatip-${{ matrix.target }}.tar.gz target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
+        cd target/${{ matrix.target }}/release
+        tar -czf ~/whatip-${{ matrix.target }}.tar.gz whatip${{ matrix.suffix }}
         shasum -a 256 whatip-${{ matrix.target }}.tar.gz 
     
     - name: Upload tar Artifact
