@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v3
     
     - run: |
-        sudo tcpdump -nn -i any -w sntp.cap
+        sudo tcpdump -nn -i any -w sntp.cap & sleep 1
 
     - uses: Swatinem/rust-cache@v2
     
