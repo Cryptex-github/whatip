@@ -5,7 +5,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(author, version, about)]
 struct Args {
-    /// The IP Address to lookup.
+    /// The IP Address to lookup, defaults to your IP Address.
     #[clap(value_parser)]
     ip: Option<String>,
     /// Disable ANSI formatting.
