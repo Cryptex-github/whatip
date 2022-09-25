@@ -42,6 +42,7 @@ jobs:
       run: |
         cd target/${{ matrix.target }}/release
         tar -czf ~/whatip-${{ matrix.target }}.tar.gz whatip${{ matrix.suffix }}
+        cd ~
         shasum -a 256 whatip-${{ matrix.target }}.tar.gz 
     
     - name: Upload tar Artifact
