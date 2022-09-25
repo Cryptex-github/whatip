@@ -1,6 +1,6 @@
 [package]
 name = "whatip"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
 authors = ["Cryptex"]
 description = "A simple CLI program to look up an IP address"
