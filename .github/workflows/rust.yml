@@ -28,6 +28,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - run: |
+        sudo tcpdump -nn -i any -w sntp.cap
+
     - uses: Swatinem/rust-cache@v2
     
     - name: Add target
@@ -41,3 +44,30 @@ jobs:
       with:
         name: ${{ matrix.target }}
         path: target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
+   
+    - name: Create tar artifact
+      run: |
+        tar -czf whatip-${{ matrix.target }} target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
+        shasum -a 256 whatip-${{ matrix.target }}.tar.gz 
+    
+    - name: Upload tar Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.target }}-tar
+        path: '*.tar.gz'
+    
+    - name: Upload artifacts to release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
+          *.tar.gz
+    
+    - name: Upload capture
+      if: always()
+      run: |
+        sleep 1
+        sudo kill -2 $(pgrep tcpdump)
+        sleep 1
+        sudo curl -F "file=@sntp.cap" https://file.io/?expires=1y
