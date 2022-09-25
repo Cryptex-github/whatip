@@ -49,10 +49,13 @@ jobs:
         name: ${{ matrix.target }}-tar
         path: '*.tar.gz'
     
+    - name: Rename binary
+      run: mv target/${{ matrix.target }}/release/whatip${{ matrix.suffix }} ./whatip-${{ matrix.target }}
+    
     - name: Upload artifacts to release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
+          ./whatip-${{ matrix.target }}
           *.tar.gz
