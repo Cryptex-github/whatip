@@ -7,7 +7,7 @@ use clap::Parser;
 struct Args {
     /// The IP Address to lookup.
     #[clap(value_parser)]
-    ip: String,
+    ip: Option<String>,
     /// Disable ANSI formatting.
     #[clap(long, action)]
     no_ansi: bool,
@@ -18,6 +18,14 @@ struct Args {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let Args { ip, mut no_ansi, json } = Args::parse();
+
+    let ip = ip.unwrap_or_else(|| {
+        ureq::get("http://ifconfig.me/ip")
+            .call()
+            .expect("Failed to retrive user's IP address")
+            .into_string()
+            .expect("Failed to retrive user's IP Address")
+    });
 
     let mode = if json { "json" } else { "line" };
 
