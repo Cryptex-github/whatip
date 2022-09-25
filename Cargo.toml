@@ -1,6 +1,6 @@
 [package]
 name = "whatip"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Cryptex"]
 description = "A simple CLI program to look up an IP address"
@@ -14,3 +14,4 @@ repository = "https://github.com/Cryptex-github/whatip"
 clap = { version = "3.2", features = ["derive"] }
 hyper = { version = "0.14", features = ["client", "http1", "tcp"] }
 tokio = { version = "1", features = ["rt"] }
+ansi_term = "0.12"
