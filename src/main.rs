@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             std::process::exit(0);
         }
 
-        let mut info = info.split("\n");
+        let mut info = info.split('\n');
         
         if info.next().unwrap() == "fail" {
             println!("Failed to retrieve information about that IP address: {}", info.next().unwrap());
@@ -55,10 +55,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         macro_rules! ansi {
             ($t:literal) => {{
-                if !no_ansi {
-                    ansi_term::Style::new().bold().paint($t).to_string()
-                } else {
+                if no_ansi {
                     $t.to_string()
+                } else {
+                    ansi_term::Style::new().bold().paint($t).to_string()
                 }
             }};
         }

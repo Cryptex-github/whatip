@@ -7,6 +7,9 @@ description = "A simple CLI program to look up an IP address"
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/Cryptex-github/whatip"
+keywords = ["ip", "address", "lookup", "cli", "clap"]
+categories = ["command-line-utilities"]
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
