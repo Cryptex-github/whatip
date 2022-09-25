@@ -27,9 +27,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - run: |
-        sudo tcpdump -nn -i any -w sntp.cap & sleep 1
 
     - uses: Swatinem/rust-cache@v2
     
@@ -63,11 +60,3 @@ jobs:
         files: |
           target/${{ matrix.target }}/release/whatip${{ matrix.suffix }}
           *.tar.gz
-    
-    - name: Upload capture
-      if: always()
-      run: |
-        sleep 1
-        sudo kill -2 $(pgrep tcpdump)
-        sleep 1
-        sudo curl -F "file=@sntp.cap" https://file.io/?expires=1y
