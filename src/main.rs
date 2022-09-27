@@ -17,7 +17,11 @@ struct Args {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let Args { ip, mut no_ansi, json } = Args::parse();
+    let Args {
+        ip,
+        mut no_ansi,
+        json,
+    } = Args::parse();
 
     let ip = ip.unwrap_or_else(|| {
         ureq::get("http://ifconfig.me/ip")
@@ -31,20 +35,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let url = format!("http://ip-api.com/{}/{}?fields=4259839", mode, ip);
 
-    let info = ureq::get(&url)
-        .call()?
-        .into_string()?;
+    let info = ureq::get(&url).call()?.into_string()?;
 
     if json {
         println!("{}", info);
-        
+
         std::process::exit(0);
     }
 
     let mut info = info.split('\n');
-    
+
     if info.next().unwrap() == "fail" {
-        println!("Failed to retrieve information about that IP address: {}", info.next().unwrap());
+        println!(
+            "Failed to retrieve information about that IP address: {}",
+            info.next().unwrap()
+        );
         std::process::exit(1);
     }
 
@@ -65,22 +70,51 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }};
     }
 
-    let country = info.next().unwrap();
-    let country_short = info.next().unwrap();
-    let region_short = info.next().unwrap();
-    let region = info.next().unwrap();
-    let city = info.next().unwrap();
-    let zip = info.next().unwrap();
-    let lat = info.next().unwrap();
-    let lon = info.next().unwrap();
-    let timezone = info.next().unwrap();
-    let isp = info.next().unwrap();
-    let org = info.next().unwrap();
-    let asn = info.next().unwrap();
-    let asn_name = info.next().unwrap();
-    let reverse_dns_name = info.next().unwrap();
+    macro_rules! stream {
+        ($iter:expr, $($item:expr),*) => {{
+            $(
+                $item = $iter.next().unwrap();
+            )*
+        }};
+    }
 
-    println!(r#"
+    let (
+        country,
+        country_short,
+        region_short,
+        region,
+        city,
+        zip,
+        lat,
+        lon,
+        timezone,
+        isp,
+        org,
+        asn,
+        asn_name,
+        reverse_dns_name,
+    );
+
+    stream!(
+        info,
+        country,
+        country_short,
+        region_short,
+        region,
+        city,
+        zip,
+        lat,
+        lon,
+        timezone,
+        isp,
+        org,
+        asn,
+        asn_name,
+        reverse_dns_name
+    );
+
+    println!(
+        r#"
 {}{}
 {}{} ({})
 {}{} ({})
