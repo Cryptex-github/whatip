@@ -17,3 +17,6 @@ categories = ["command-line-utilities"]
 clap = { version = "3.2", features = ["derive"] }
 ureq = { version = "2", default-features = false }
 ansi_term = "0.12"
+
+[profile.release]
+strip = true
