@@ -1,6 +1,6 @@
 [package]
 name = "whatip"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2021"
 authors = ["Cryptex"]
 description = "A simple CLI program to look up an IP address"
@@ -14,7 +14,7 @@ categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "3.2", features = ["derive"] }
+clap = { version = "4", features = ["derive"] }
 ureq = { version = "2", default-features = false }
 ansi_term = "0.12"
 

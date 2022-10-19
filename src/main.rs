@@ -5,7 +5,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(author, version, about)]
 struct Args {
-    /// The IP Address to lookup, defaults to your IP Address.
+    /// The IP Address / domain to lookup, defaults to your IP Address.
     #[clap(value_parser)]
     ip: Option<String>,
     /// Disable ANSI formatting.
@@ -93,6 +93,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         asn,
         asn_name,
         reverse_dns_name,
+        ip
     );
 
     stream!(
@@ -110,7 +111,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         org,
         asn,
         asn_name,
-        reverse_dns_name
+        reverse_dns_name,
+        ip
     );
 
     println!(
